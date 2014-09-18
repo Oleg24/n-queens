@@ -173,20 +173,14 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      console.log(minorDiagonalColumnIndexAtFirstRow);
       var board = this.rows();
-      var n = board.length;
       var diagonals = [];
-      var x = n;
-      var diagCol = minorDiagonalColumnIndexAtFirstRow;
 
-      for(var i = diagCol+n; i < diagCol-n; i--){
-        if( i <= 0 && i < n && diagCol < n) {
-           diagonals.push(board[x][i]);
+      for(var i = 0; i < board.length; i++){
+        if(minorDiagonalColumnIndexAtFirstRow-i >= 0 && minorDiagonalColumnIndexAtFirstRow <= board.length) {
+           diagonals.push(board[i][minorDiagonalColumnIndexAtFirstRow-i]);
         }
-        x--;
       }
-
       var sum = diagonals.reduce(function(item, total){
         return total + item;
       }, 0);
@@ -198,10 +192,10 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var board = this.rows();
-      var indexLeft = -board.length/2;
-      var indexRight = board.length/2;
-      for(var i=indexRight; i>indexLeft; i--){
-        if (this.hasMinorDiagonalConflictAt(i)) {
+      var indexLeft = 0;
+      var indexRight = board.length*1.5;
+      for(var i = indexRight; i>indexLeft; i--){
+        if(this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
       }
